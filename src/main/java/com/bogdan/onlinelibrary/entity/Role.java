@@ -1,10 +1,9 @@
 package com.bogdan.onlinelibrary.entity;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -19,12 +18,14 @@ public class Role extends Auditable implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     @Column(name = "role_id")
     private Integer id;
     @Column(name = "name")
     private String name;
 
     @Override
+    @JsonIgnore
     public String getAuthority() {
         return String.format("ROLE_%s", name)
                 .toUpperCase(Locale.ROOT);

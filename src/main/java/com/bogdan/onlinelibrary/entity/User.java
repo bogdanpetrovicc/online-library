@@ -1,10 +1,8 @@
 package com.bogdan.onlinelibrary.entity;
 
-import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
 
@@ -17,6 +15,7 @@ public class User extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     @Column(name = "user_id")
     private Integer id;
     @JoinColumn(name = "role_fk", referencedColumnName = "role_id")
