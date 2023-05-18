@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
 @Getter(AccessLevel.PROTECTED)
 public class GenericServiceImpl<T> implements GenericService<T> {
 
-    private final GenericRepository<T> genericRepository;
+    protected final GenericRepository<T> genericRepository;
 
     @Override
     public List<T> findAll() {

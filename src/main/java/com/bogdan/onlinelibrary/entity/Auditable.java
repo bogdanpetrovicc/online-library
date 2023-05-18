@@ -2,9 +2,6 @@ package com.bogdan.onlinelibrary.entity;
 
 import com.bogdan.onlinelibrary.entity.domain.RecordStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.MappedSuperclass;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,12 +11,15 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.EntityListeners;
+import javax.persistence.Enumerated;
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import static com.bogdan.onlinelibrary.entity.domain.RecordStatus.ACTIVE;
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
-import static jakarta.persistence.EnumType.ORDINAL;
+import static javax.persistence.EnumType.ORDINAL;
 
 @Getter
 @Setter
