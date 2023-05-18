@@ -30,11 +30,11 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/login", "/register", "/clubs", "/css/**").permitAll()
+                .antMatchers("/login", "/register", "/css/**").permitAll()
                 .and()
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/clubs")
+//                        .defaultSuccessUrl("/")
                         .loginProcessingUrl("/login")
                         .failureUrl("/login?error=true")
                         .permitAll()

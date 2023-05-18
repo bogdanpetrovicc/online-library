@@ -1,0 +1,54 @@
+<html
+        xmlns:th="http://thymeleaf.org"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://thymeleaf.org" lang="">
+<head>
+    <title>Register</title>
+</head>
+<section>
+    <style>
+        .main {
+            padding: 0 10px;
+        }
+    </style>
+    <div class="main">
+        <div class="col-md-6 col-sm-12">
+            <div th:if="${param.fail}" class="alert alert-success">
+                Username or email already exists
+            </div>
+            <div class="login-form">
+                <form method="post" role="form" th:action="@{/register/save}" th:object="${user}">
+                    <div class="form-group">
+                        <label>Username
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Username"
+                                    th:field="*{username}">
+                        </label>
+                    </div>
+                    <p th:if="${#fields.hasErrors('username')}" class="text-danger"></p>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <label>
+                            <input
+                                    type="password"
+                                    class="form-control"
+                                    placeholder="Password"
+                                    th:field="*{password}">
+                        </label>
+                    </div>
+                    <p th:if="${#fields.hasErrors('password')}" class="text-danger"></p>
+                    <button type="submit" value="Register" class="btn btn-secondary">Register</button>
+                    <button onclick="redirectToLogin()" type="button" class="btn btn-black">Login here.</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    function redirectToLogin() {
+        window.location.href = "/online-library/login";
+    }
+</script>
+</html>
