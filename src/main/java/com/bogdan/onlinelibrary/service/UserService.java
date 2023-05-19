@@ -1,7 +1,10 @@
 package com.bogdan.onlinelibrary.service;
 
-import com.bogdan.onlinelibrary.entity.User;
+import com.bogdan.onlinelibrary.entity.UserEntity;
 import com.bogdan.onlinelibrary.service.generic.GenericService;
 
-public interface UserService extends GenericService<User> {
+public interface UserService extends GenericService<UserEntity> {
+    UserEntity findByUsername(String username);
+
+    UserEntity saveUser(UserEntity user);
 }

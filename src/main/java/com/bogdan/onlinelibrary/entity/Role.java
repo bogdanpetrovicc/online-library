@@ -15,6 +15,8 @@ import java.util.Locale;
 @Entity
 @Table(name = "role")
 public class Role extends Auditable implements GrantedAuthority {
+    public static final String USER = "USER";
+    public static final String ADMIN = "ADMIN";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

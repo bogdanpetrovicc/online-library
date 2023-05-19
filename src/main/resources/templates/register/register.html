@@ -39,6 +39,39 @@
                         </label>
                     </div>
                     <p th:if="${#fields.hasErrors('password')}" class="text-danger"></p>
+                    <div class="form-group">
+                        <label>Card number:</label>
+                        <label>
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Card number"
+                                    th:field="*{creditCard.cardNumber}">
+                        </label>
+                    </div>
+                    <p th:if="${#fields.hasErrors('creditCard.cardNumber')}" class="text-danger"></p>
+                    <div class="form-group">
+                        <label>Bank:</label>
+                        <label>
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Bank"
+                                    th:field="*{creditCard.bank}">
+                        </label>
+                    </div>
+                    <p th:if="${#fields.hasErrors('creditCard.bank')}" class="text-danger"></p>
+                    <div class="form-group">
+                        <label>Balance:</label>
+                        <label>
+                            <input
+                                    type="number"
+                                    class="form-control"
+                                    placeholder="Balance"
+                                    th:field="*{creditCard.balance}">
+                        </label>
+                    </div>
+                    <p th:if="${#fields.hasErrors('creditCard.balance')}" class="text-danger"></p>
                     <button type="submit" value="Register" class="btn btn-secondary">Register</button>
                     <button onclick="redirectToLogin()" type="button" class="btn btn-black">Login here.</button>
                 </form>

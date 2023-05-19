@@ -21,7 +21,7 @@ public class Member extends Auditable {
     private Integer id;
     @JoinColumn(name = "user_fk", referencedColumnName = "user_id")
     @OneToOne
-    private User user;
+    private UserEntity user;
     @Column(name = "member_number")
     private Integer memberNumber;
     @Column(name = "discount")
