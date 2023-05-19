@@ -11,7 +11,7 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "user")
-public class User extends Auditable {
+public class UserEntity extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
