@@ -27,7 +27,9 @@
         <th>Name</th>
         <th>Price</th>
         <th>Genre</th>
+        <th>Available</th>
         <th>Description</th>
+        <th>Action</th>
     </tr>
     </thead>
     <tbody>
@@ -39,9 +41,26 @@
         <td th:text="${book.name}"></td>
         <td th:text="${book.price}"></td>
         <td th:text="${book.genre}"></td>
+        <td th:text="${book.available}"></td>
         <td th:text="${book.description}"></td>
+        <td>
+            <form th:action="@{/books/delete}" method="post" style="display: inline;">
+                <input type="hidden" name="id" th:value="${book.id}" />
+                <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-danger">Delete</button>
+            </form>
+            <form th:action="@{/books/add}" method="get" style="display: inline;">
+                <input type="hidden" name="bookId" th:value="${book.id}" />
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>
+<button onclick="redirectToCreateBookPage()" class="btn btn-success">Create New Book</button>
 </body>
+<script>
+    function redirectToCreateBookPage() {
+        window.location.href = "books/add";
+    }
+</script>
 </html>

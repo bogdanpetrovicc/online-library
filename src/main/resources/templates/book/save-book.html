@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <title>Create New Book</title>
+</head>
+<body>
+<form th:action="@{${book.id != null ? '/books/update' : '/books'}}" method="post" th:object="${book}">
+    <h1 th:text="${book.id != null ? 'Update Book' : 'Create New Book'}"></h1>
+    <div>
+        <label for="authorId">Author:</label>
+        <select id="authorId" name="authorId">
+            <option value="">Select Author</option>
+            <option th:each="author : ${authors}"
+                    th:value="${author.id}"
+                    th:selected="${author.id == book.author.id}"
+                    th:text="${author.firstName + ' ' + author.lastName}">
+            </option>
+        </select>
+    </div>
+    <div>
+        <label for="bookId"></label><input hidden="hidden" type="number" id="bookId" name="bookId" th:value="${book.id}">
+    </div>
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" th:value="${book.name}" required>
+    </div>
+    <div>
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" th:value="${book.price}" required>
+    </div>
+    <div>
+        <label for="genre">Genre:</label>
+        <input type="text" id="genre" name="genre" th:value="${book.genre}" required>
+    </div>
+    <div>
+        <label for="available">Available:</label>
+        <input type="checkbox" id="available" name="available" th:checked="${book.available}">
+    </div>
+    <div>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" th:text="${book.description}"></textarea>
+    </div>
+    <button type="submit">Create Book</button>
+</form>
+</body>
+</html>

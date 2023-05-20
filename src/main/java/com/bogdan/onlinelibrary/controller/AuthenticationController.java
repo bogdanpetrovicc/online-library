@@ -2,8 +2,6 @@ package com.bogdan.onlinelibrary.controller;
 
 import com.bogdan.onlinelibrary.entity.CreditCard;
 import com.bogdan.onlinelibrary.entity.UserEntity;
-import com.bogdan.onlinelibrary.service.CreditCardService;
-import com.bogdan.onlinelibrary.service.RoleService;
 import com.bogdan.onlinelibrary.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -20,8 +18,6 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final UserService userService;
-    private final RoleService roleService;
-    private final CreditCardService creditCardService;
 
     //PAGES START
     @GetMapping("/login")
