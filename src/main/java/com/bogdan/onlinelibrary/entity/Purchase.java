@@ -29,4 +29,11 @@ public class Purchase extends Auditable {
     private LocalDate date;
     @Column(name = "price")
     private Double price;
+
+    public Purchase(Book book, Member member, LocalDate date, Double price) {
+        this.book = book;
+        this.member = member;
+        this.date = date;
+        this.price = price;
+    }
 }

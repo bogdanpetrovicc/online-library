@@ -23,13 +23,10 @@ public class BookController {
     // PAGES START
     @GetMapping("/add")
     public String getAddBookPage(Model model) {
-//        Book book = bookId != null ? bookService.findById(bookId) : new Book();
-
         model.addAllAttributes(Map.of(
                 "book", new Book(),
                 "authors", authorService.findAll()
         ));
-
         return "book/save-book";
     }
 
