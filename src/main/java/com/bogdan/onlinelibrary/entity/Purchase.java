@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Data
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
@@ -24,4 +25,8 @@ public class Purchase extends Auditable {
     @JoinColumn(name = "member_fk", referencedColumnName = "member_id")
     @ManyToOne
     private Member member;
+    @Column(name = "date")
+    private LocalDate date;
+    @Column(name = "price")
+    private Double price;
 }

@@ -1,6 +1,7 @@
 package com.bogdan.onlinelibrary.entity;
 
 import com.bogdan.onlinelibrary.entity.domain.MemberType;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -30,4 +31,10 @@ public class Member extends Auditable {
     @Enumerated(EnumType.STRING)
     private MemberType type;
 
+    public Member(UserEntity user, Integer memberNumber, Integer discount, MemberType type) {
+        this.user = user;
+        this.memberNumber = memberNumber;
+        this.discount = discount;
+        this.type = type;
+    }
 }

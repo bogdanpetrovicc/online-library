@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:temporals="urn:java:java.time.temporal.TemporalAdjusters"
+        lang="">
+<head>
+    <title>Purchases</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<h1>Purchases</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Username</th>
+        <th>Member Number</th>
+        <th>Member Type</th>
+        <th>Price</th>
+        <th>Discount</th>
+        <th>Book Name</th>
+        <th>Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="purchase : ${purchases}">
+        <td th:text="${purchase.member.user.username}"></td>
+        <td th:text="${purchase.member.memberNumber}"></td>
+        <td th:text="${purchase.member.type}"></td>
+        <td th:text="${purchase.price}"></td>
+        <td th:text="${purchase.member.discount}"></td>
+        <td th:text="${purchase.book.name}"></td>
+        <td th:text="${#temporals.format(purchase.date, 'dd-MM-yyyy')}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
