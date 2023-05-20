@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org" lang="">
+<head th:fragment="header">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">RunGroop</title>
+</head>
+<style>
+    .sidebar {
+        background-color: #f0f0f0;
+        width: 200px;
+        height: 100%;
+        position: fixed;
+        left: 0;
+        top: 0;
+    }
+
+    .sidebar ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar li {
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .sidebar li:last-child {
+        border-bottom: none;
+    }
+
+    .sidebar li a {
+        text-decoration: none;
+        color: #333;
+    }
+
+    .sidebar li a:hover {
+        color: #000;
+        font-weight: bold;
+    }
+
+    .content {
+        margin-left: 200px;
+        padding: 20px;
+    }
+</style>
+<body th:fragment="navbar">
+<div class="sidebar">
+    <ul>
+        <li><a th:href="@{/books}">Books</a></li>
+        <li><a th:href="@{/purchases}">Purchases</a></li>
+        <li><a th:href="@{/logout}">Logout</a></li>
+    </ul>
+</div>
+<div class="content">
+    <!-- Your page content here -->
+</div>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

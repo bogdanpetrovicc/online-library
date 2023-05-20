@@ -22,7 +22,19 @@ public class BookController {
 
     // PAGES START
     @GetMapping("/add")
-    public String getAddBookPage(@RequestParam(value = "bookId", required = false) Integer bookId, Model model) {
+    public String getAddBookPage(Model model) {
+//        Book book = bookId != null ? bookService.findById(bookId) : new Book();
+
+        model.addAllAttributes(Map.of(
+                "book", new Book(),
+                "authors", authorService.findAll()
+        ));
+
+        return "book/save-book";
+    }
+
+    @GetMapping("/update")
+    public String getUpdateBookPage(@RequestParam(value = "bookId", required = false) Integer bookId, Model model) {
         Book book = bookId != null ? bookService.findById(bookId) : new Book();
 
         model.addAllAttributes(Map.of(
@@ -30,7 +42,7 @@ public class BookController {
                 "authors", authorService.findAll()
         ));
 
-        return "book/save-book";
+        return "book/update-book";
     }
 
     @GetMapping("")

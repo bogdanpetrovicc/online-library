@@ -4,14 +4,15 @@
     <title>Create New Book</title>
 </head>
 <body>
-<form th:action="@{/books}" method="post">
-    <h1>Create New Book</h1>
+<form th:action="@{/update}" method="post" th:object="${book}">
+    <h1>Update Book</h1>
     <div>
         <label for="authorId">Author:</label>
         <select id="authorId" name="authorId">
             <option value="">Select Author</option>
             <option th:each="author : ${authors}"
                     th:value="${author.id}"
+                    th:selected="${author.id == book.author.id}"
                     th:text="${author.firstName + ' ' + author.lastName}">
             </option>
         </select>
