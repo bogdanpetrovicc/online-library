@@ -8,4 +8,6 @@ public interface MemberService extends GenericService<Member> {
     Member findByUserId(Integer userId);
 
     void savePremiumMember(Integer userId);
+
+    Member findByUsername(String username);
 }

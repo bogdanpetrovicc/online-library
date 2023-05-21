@@ -26,4 +26,9 @@ public class MemberServiceImpl extends GenericServiceImpl<Member> implements Mem
         member.setType(MemberType.PREMIUM);
         genericRepository.save(member);
     }
+
+    @Override
+    public Member findByUsername(String username) {
+        return ((MemberRepository) genericRepository).findByUser_Username(username);
+    }
 }

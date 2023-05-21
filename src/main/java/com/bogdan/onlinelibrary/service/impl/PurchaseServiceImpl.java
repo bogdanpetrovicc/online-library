@@ -6,6 +6,7 @@ import com.bogdan.onlinelibrary.entity.Purchase;
 import com.bogdan.onlinelibrary.entity.domain.MemberType;
 import com.bogdan.onlinelibrary.exception.NotEnoughMoneyException;
 import com.bogdan.onlinelibrary.repository.PurchaseRepository;
+import com.bogdan.onlinelibrary.security.SecurityUtil;
 import com.bogdan.onlinelibrary.service.BookService;
 import com.bogdan.onlinelibrary.service.MemberService;
 import com.bogdan.onlinelibrary.service.PurchaseService;
@@ -28,11 +29,6 @@ public class PurchaseServiceImpl extends GenericServiceImpl<Purchase> implements
     }
 
     @Override
-    public List<Purchase> findAllByMemberId(Integer memberId) {
-        return ((PurchaseRepository) genericRepository).findAllByMemberId(memberId);
-    }
-
-    @Override
     public void savePurchase(Integer userId, Integer bookId) {
         Member member = memberService.findByUserId(userId);
         Book book = bookService.findById(bookId);
@@ -51,5 +47,13 @@ public class PurchaseServiceImpl extends GenericServiceImpl<Purchase> implements
         } else {
             throw new NotEnoughMoneyException();
         }
+    }
+
+    @Override
+    public List<Purchase> findAllByLoggedInMember() {
+        String username = SecurityUtil.getSessionUser();
+        System.out.println(username);
+        Member member = memberService.findByUsername(username);
+        return ((PurchaseRepository) genericRepository).findAllByMemberId(member.getId());
     }
 }

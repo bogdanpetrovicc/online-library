@@ -1,6 +1,7 @@
 package com.bogdan.onlinelibrary.controller;
 
 import com.bogdan.onlinelibrary.entity.Member;
+import com.bogdan.onlinelibrary.security.SecurityUtil;
 import com.bogdan.onlinelibrary.service.BookService;
 import com.bogdan.onlinelibrary.service.MemberService;
 import com.bogdan.onlinelibrary.service.PurchaseService;
@@ -41,9 +42,8 @@ public class PurchaseController {
     }
 
     @GetMapping("/my-purchases")
-    public String getMyPurchasesPage(@RequestParam("userId") Integer userId, Model model) {
-        Member member = memberService.findByUserId(userId);
-        model.addAttribute("purchases", purchaseService.findAllByMemberId(member.getId()));
+    public String getMyPurchasesPage(Model model) {
+        model.addAttribute("purchases", purchaseService.findAllByLoggedInMember());
         return "purchase/my-purchases";
     }
 }

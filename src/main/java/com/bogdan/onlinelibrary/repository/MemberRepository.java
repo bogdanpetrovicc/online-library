@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MemberRepository extends GenericRepository<Member> {
     Member findByUserId(Integer userId);
+
+    Member findByUser_Username(String username);
 }

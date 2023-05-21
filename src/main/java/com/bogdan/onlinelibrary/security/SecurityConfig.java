@@ -18,7 +18,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final CustomUserDetailsService customUserDetailsService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -26,8 +25,8 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/login", "/register", "/css/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/credit-cards/**", "/purchases/save", "/members/**").hasRole("USER")
-                .antMatchers(HttpMethod.GET, "/credit-cards/**", "/purchases/my-purchases").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "/credit-cards/", "/purchases/save", "/members/**").hasRole("USER")
+                .antMatchers(HttpMethod.GET, "/credit-cards/", "/purchases/my-purchases/").hasRole("USER")
                 .antMatchers(HttpMethod.POST, "/books/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/purchases").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/books/").hasAnyRole("USER", "ADMIN")
