@@ -7,5 +7,5 @@ public interface MemberService extends GenericService<Member> {
 
     Member findByUserId(Integer userId);
 
-    void savePremiumMember(Member member);
+    void savePremiumMember(Integer userId);
 }

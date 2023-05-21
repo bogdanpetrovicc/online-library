@@ -1,13 +1,9 @@
 package com.bogdan.onlinelibrary.controller;
 
-import com.bogdan.onlinelibrary.entity.Book;
 import com.bogdan.onlinelibrary.entity.Member;
-import com.bogdan.onlinelibrary.entity.Purchase;
-import com.bogdan.onlinelibrary.entity.domain.MemberType;
 import com.bogdan.onlinelibrary.service.BookService;
 import com.bogdan.onlinelibrary.service.MemberService;
 import com.bogdan.onlinelibrary.service.PurchaseService;
-import com.bogdan.onlinelibrary.service.generic.impl.GenericServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.LocalDate;
-
 
 @Controller
 @RequiredArgsConstructor
@@ -26,7 +20,6 @@ import java.time.LocalDate;
 public class PurchaseController {
     private final PurchaseService purchaseService;
     private final MemberService memberService;
-    private final BookService bookService;
 
     //PAGES START
     @GetMapping("")
@@ -43,25 +36,7 @@ public class PurchaseController {
         if (result.hasErrors()) {
             model.addAttribute("error", result.getAllErrors().get(0).getDefaultMessage());
         }
-
-        Member member = memberService.findByUserId(userId);
-        Book book = bookService.findById(bookId);
-
-        if (member.getType() == MemberType.PREMIUM) {
-            book.setPrice(book.getPrice() * member.getDiscount() / 100);
-        }
-
-        if (member.getUser().getCreditCard().getBalance() >= book.getPrice()) {
-            purchaseService.save(new Purchase(
-                    book,
-                    member,
-                    LocalDate.now(),
-                    book.getPrice()
-            ));
-        } else {
-            model.addAttribute("error", "Not enough money on your credit card!");
-        }
-
+        purchaseService.savePurchase(userId, bookId);
         return "redirect:/books";
     }
 

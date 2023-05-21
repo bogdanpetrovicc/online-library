@@ -21,7 +21,8 @@ public class MemberServiceImpl extends GenericServiceImpl<Member> implements Mem
     }
 
     @Override
-    public void savePremiumMember(Member member) {
+    public void savePremiumMember(Integer userId) {
+        Member member = findByUserId(userId);
         member.setType(MemberType.PREMIUM);
         genericRepository.save(member);
     }

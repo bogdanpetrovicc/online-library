@@ -1,6 +1,5 @@
 package com.bogdan.onlinelibrary.controller;
 
-import com.bogdan.onlinelibrary.entity.Member;
 import com.bogdan.onlinelibrary.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -16,8 +15,7 @@ public class MemberController {
 
     @PostMapping("/save")
     public String savePremiumMember(@RequestParam("userId") Integer userId) {
-        Member member = memberService.findByUserId(userId);
-        memberService.savePremiumMember(member);
+        memberService.savePremiumMember(userId);
         return "redirect:/books";
     }
 }

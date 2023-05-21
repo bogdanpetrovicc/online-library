@@ -21,23 +21,25 @@ public class SecurityConfig {
     private final CustomUserDetailsService customUserDetailsService;
 
     @Bean
-    public static PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/login", "/register", "/css/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/credit-cards/**", "/purchases/save", "/members/**").hasRole("USER")
+                .antMatchers(HttpMethod.GET, "/credit-cards/**", "/purchases/my-purchases").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "/books/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/purchases").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/books/").hasAnyRole("USER", "ADMIN")
+                .anyRequest().authenticated()
                 .and()
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/books")
+                        .defaultSuccessUrl("/books", true)
                         .loginProcessingUrl("/login")
                         .failureUrl("/login?error=true")
                         .permitAll()
+                        .and()
                 ).logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .permitAll()
@@ -46,7 +48,8 @@ public class SecurityConfig {
         return http.build();
     }
 
-    public void configure(AuthenticationManagerBuilder builder) throws Exception {
-        builder.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
+    @Bean
+    public static PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

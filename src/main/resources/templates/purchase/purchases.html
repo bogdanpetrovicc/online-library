@@ -33,6 +33,7 @@
         <th>Price</th>
         <th>Discount</th>
         <th>Book Name</th>
+        <th>Genre</th>
         <th>Date</th>
     </tr>
     </thead>
@@ -44,6 +45,7 @@
         <td th:text="${purchase.price}"></td>
         <td th:text="${purchase.member.discount}"></td>
         <td th:text="${purchase.book.name}"></td>
+        <td th:text="${purchase.book.genre}"></td>
         <td th:text="${#temporals.format(purchase.date, 'dd-MM-yyyy')}"></td>
     </tr>
     </tbody>

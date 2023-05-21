@@ -37,7 +37,7 @@ public class UserServiceImpl extends GenericServiceImpl<UserEntity> implements U
     }
 
     @Override
-    public UserEntity saveUser(UserEntity user) {
+    public void saveUser(UserEntity user) {
         UserEntity newUser = new UserEntity();
 
         // set role
@@ -59,7 +59,5 @@ public class UserServiceImpl extends GenericServiceImpl<UserEntity> implements U
                 0,
                 MemberType.STANDARD
         ));
-
-        return newUser;
     }
 }

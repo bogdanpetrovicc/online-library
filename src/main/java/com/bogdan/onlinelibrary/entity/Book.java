@@ -1,5 +1,6 @@
 package com.bogdan.onlinelibrary.entity;
 
+import com.bogdan.onlinelibrary.entity.domain.Genre;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -26,7 +27,8 @@ public class Book extends Auditable {
     @Column(name = "price")
     private Double price;
     @Column(name = "genre")
-    private String genre;
+    @Enumerated(EnumType.STRING)
+    private Genre genre;
     @Column(name = "available")
     private Boolean available;
     @Column(name = "description")

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Credit Card</title>
+</head>
+<body>
+<h1>Update Credit Card</h1>
+
+<form th:action="@{/update}" method="post" th:object="creditCard">
+    <label for="cardNumber">Card Number:</label>
+    <input type="text" id="cardNumber" name="cardNumber" th:value="cardNumber" th:required><br><br>
+
+    <label for="bank">Bank:</label>
+    <input type="text" id="bank" name="bank" th:value="bank" th:required><br><br>
+
+    <label for="balance">Balance:</label>
+    <input type="number" id="balance" name="balance" th:value="balance" th:required><br><br>
+
+    <button type="submit">Update</button>
+</form>
+</body>
+</html>
