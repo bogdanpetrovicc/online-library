@@ -38,6 +38,12 @@ public class UserServiceImpl extends GenericServiceImpl<UserEntity> implements U
     }
 
     @Override
+    public UserEntity getLoggedInUser() {
+        String username = SecurityUtil.getSessionUser();
+        return findByUsername(username);
+    }
+
+    @Override
     public void saveUser(UserEntity user) {
         UserEntity newUser = new UserEntity();
 
@@ -64,11 +70,6 @@ public class UserServiceImpl extends GenericServiceImpl<UserEntity> implements U
 
     @Override
     public boolean isUserAdmin() {
-        if (SecurityUtil.getSessionUser() == null) {
-            return false;
-        }
-        String username = SecurityUtil.getSessionUser();
-        System.out.println("username: " + username);
-        return findByUsername(username).getRole().getName().equals(Role.ADMIN);
+        return getLoggedInUser() != null && getLoggedInUser().getRole().getName().equals(Role.ADMIN);
     }
 }

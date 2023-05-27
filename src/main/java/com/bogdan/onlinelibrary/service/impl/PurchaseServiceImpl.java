@@ -44,6 +44,10 @@ public class PurchaseServiceImpl extends GenericServiceImpl<Purchase> implements
                     LocalDate.now(),
                     book.getPrice()
             ));
+            member.getUser().getCreditCard().setBalance(
+                    member.getUser().getCreditCard().getBalance() - book.getPrice()
+            );
+            memberService.save(member);
         } else {
             throw new NotEnoughMoneyException();
         }

@@ -6,6 +6,8 @@ import com.bogdan.onlinelibrary.service.generic.GenericService;
 public interface UserService extends GenericService<UserEntity> {
     UserEntity findByUsername(String username);
 
+    UserEntity getLoggedInUser();
+
     void saveUser(UserEntity user);
 
     boolean isUserAdmin();

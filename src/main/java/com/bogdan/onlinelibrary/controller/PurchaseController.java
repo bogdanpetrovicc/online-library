@@ -1,6 +1,7 @@
 package com.bogdan.onlinelibrary.controller;
 
 import com.bogdan.onlinelibrary.entity.Member;
+import com.bogdan.onlinelibrary.exception.NotEnoughMoneyException;
 import com.bogdan.onlinelibrary.security.SecurityUtil;
 import com.bogdan.onlinelibrary.service.BookService;
 import com.bogdan.onlinelibrary.service.MemberService;
@@ -32,12 +33,14 @@ public class PurchaseController {
     @PostMapping("/save")
     public String savePurchase(@RequestParam("bookId") Integer bookId,
                                @RequestParam("userId") Integer userId,
-                               BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            model.addAttribute("error", result.getAllErrors().get(0).getDefaultMessage());
+                               Model model) {
+        try {
+            purchaseService.savePurchase(userId, bookId);
+            return "redirect:/purchases/my-purchases";
+        } catch (NotEnoughMoneyException ex) {
+            model.addAttribute("errorMessage", "You don't have enough money to buy this book!");
+            return "book/books";
         }
-        purchaseService.savePurchase(userId, bookId);
-        return "redirect:/books";
     }
 
     @GetMapping("/my-purchases")

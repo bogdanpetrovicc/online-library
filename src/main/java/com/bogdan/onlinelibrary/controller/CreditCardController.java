@@ -27,7 +27,7 @@ public class CreditCardController {
     @PostMapping("/update")
     public String updateCreditCard(@Valid @ModelAttribute("creditCard") CreditCard creditCard,
                                    @RequestParam("creditCardId") Integer creditCardId,
-                                   BindingResult result, Model model) {
+                                   BindingResult result) {
         if (result.hasErrors()) {
             return "credit-card/update-credit-card";
         }
