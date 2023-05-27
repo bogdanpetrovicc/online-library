@@ -52,7 +52,6 @@ public class PurchaseServiceImpl extends GenericServiceImpl<Purchase> implements
     @Override
     public List<Purchase> findAllByLoggedInMember() {
         String username = SecurityUtil.getSessionUser();
-        System.out.println(username);
         Member member = memberService.findByUsername(username);
         return ((PurchaseRepository) genericRepository).findAllByMemberId(member.getId());
     }

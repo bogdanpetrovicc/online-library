@@ -13,13 +13,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 
-
 @Controller
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final UserService userService;
 
     //PAGES START
+    @GetMapping("/")
+    public String redirectToLoginPage() {
+        return "redirect:/login";
+    }
+
     @GetMapping("/login")
     public String getLoginPage() {
         return "login/login";

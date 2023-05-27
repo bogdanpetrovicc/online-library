@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/purchases")
 public class PurchaseController {
     private final PurchaseService purchaseService;
-    private final MemberService memberService;
 
     //PAGES START
     @GetMapping("")

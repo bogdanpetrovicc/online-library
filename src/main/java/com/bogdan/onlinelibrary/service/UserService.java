@@ -7,4 +7,6 @@ public interface UserService extends GenericService<UserEntity> {
     UserEntity findByUsername(String username);
 
     void saveUser(UserEntity user);
+
+    boolean isUserAdmin();
 }

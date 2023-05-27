@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -34,7 +35,7 @@ public class BookController {
     public String getUpdateBookPage(@RequestParam(value = "bookId", required = false) Integer bookId, Model model) {
         Book book = bookId != null ? bookService.findById(bookId) : new Book();
 
-        model.addAllAttributes(Map.of(
+        model.addAllAttributes(List.of(
                 "book", book,
                 "authors", authorService.findAll()
         ));

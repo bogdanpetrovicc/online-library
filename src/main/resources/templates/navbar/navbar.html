@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org" lang="">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      lang="">
 <head th:fragment="header">
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -56,16 +57,13 @@
 <div class="sidebar">
     <ul>
         <li><a th:href="@{/books}">Books</a></li>
-        <li><a th:href="@{/purchases}">Purchases</a></li>
-        <li><a th:href="@{/purchases/my-purchases}">My Purchases</a></li>
-        <li><a th:href="@{/credit-cards}">Credit card</a></li>
+        <li th:if="${isAdmin}"><a th:href="@{/purchases}">Purchases</a></li>
+        <li th:if="${!isAdmin}"><a th:href="@{/purchases/my-purchases}">My Purchases</a></li>
+        <li th:if="${!isAdmin}"><a th:href="@{/credit-cards}">Credit card</a></li>
         <li><a th:href="@{/logout}">Logout</a></li>
     </ul>
 </div>
 <div class="content">
-    <!-- Your page content here -->
 </div>
-<!-- Bootstrap core JS-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

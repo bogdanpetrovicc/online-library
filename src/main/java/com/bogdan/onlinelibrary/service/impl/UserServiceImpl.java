@@ -7,6 +7,7 @@ import com.bogdan.onlinelibrary.entity.domain.MemberType;
 import com.bogdan.onlinelibrary.repository.RoleRepository;
 import com.bogdan.onlinelibrary.repository.UserRepository;
 import com.bogdan.onlinelibrary.repository.generic.GenericRepository;
+import com.bogdan.onlinelibrary.security.SecurityUtil;
 import com.bogdan.onlinelibrary.service.CreditCardService;
 import com.bogdan.onlinelibrary.service.MemberService;
 import com.bogdan.onlinelibrary.service.UserService;
@@ -59,5 +60,15 @@ public class UserServiceImpl extends GenericServiceImpl<UserEntity> implements U
                 0,
                 MemberType.STANDARD
         ));
+    }
+
+    @Override
+    public boolean isUserAdmin() {
+        if (SecurityUtil.getSessionUser() == null) {
+            return false;
+        }
+        String username = SecurityUtil.getSessionUser();
+        System.out.println("username: " + username);
+        return findByUsername(username).getRole().getName().equals(Role.ADMIN);
     }
 }
