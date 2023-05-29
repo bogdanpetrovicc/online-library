@@ -1,12 +1,10 @@
 package com.bogdan.onlinelibrary.entity.domain;
 
 public enum Genre {
-    SCI_FI("Naučna fantastika"),
-    HORROR("Horor"),
-    DRAMA("Drama"),
-    ACTION("Akcija"),
-    COMEDY("Komedija"),
-    ROMANCE("Romansa");
+    SOFTWARE_ENGINEERING("Softversko inženjerstvo"),
+    CYBER_SECURITY("Sajber bezbednost"),
+    BLOCKCHAIN("Blokčejn"),
+    VIRTUALIZATION("Virtualizacija");
 
     private final String value;
     Genre(String value) {

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+</head>
+<body>
+<h1>My profile</h1>
+<div th:include="navbar/navbar :: navbar"></div>
+<form th:action="@{/members/save}" method="post" th:object="${loggedInMember}">
+    <div>
+        <label for="userId"></label><input hidden="hidden" type="number" id="userId"
+                                                     name="userId"
+                                                     th:value="${loggedInMember.user.id}">
+    </div>
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" th:value="${loggedInMember.user.username}" readonly><br><br>
+    </div>
+    <div>
+        <label for="memberNumber">Member number:</label>
+        <input type="number" id="memberNumber" name="memberNumber" th:value="${loggedInMember.memberNumber}"
+               readonly><br><br>
+    </div>
+    <div>
+        <label for="discount">Discount:</label>
+        <input type="number" id="discount" name="discount" th:value="${loggedInMember.discount}" readonly><br><br>
+    </div>
+    <div>
+        <label for="type">Member type:</label>
+        <select id="type" name="type">
+            <option th:each="type : ${types}"
+                    th:value="${type}"
+                    th:selected="${loggedInMember.type == type}"
+                    th:text="${type}">
+            </option>
+        </select>
+    </div>
+    <div>
+        <button type="submit">Update</button>
+    </div>
+</form>
+</body>
+</html>

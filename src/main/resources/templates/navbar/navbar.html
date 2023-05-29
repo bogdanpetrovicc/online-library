@@ -58,7 +58,9 @@
     <ul>
         <li><a th:href="@{/books}">Books</a></li>
         <li th:if="${isAdmin}"><a th:href="@{/purchases}">Purchases</a></li>
+        <li th:if="${isAdmin}"><a th:href="@{/members}">Members</a></li>
         <li th:if="${!isAdmin}"><a th:href="@{/purchases/my-purchases}">My Purchases</a></li>
+        <li th:if="${!isAdmin}"><a th:href="@{/members/member-profile}">My profile</a></li>
         <li th:if="${!isAdmin}"><a th:href="@{/credit-cards}">Credit card</a></li>
         <li><a th:href="@{/logout}">Logout</a></li>
     </ul>

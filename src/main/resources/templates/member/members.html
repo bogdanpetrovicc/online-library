@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html
         xmlns:th="http://www.thymeleaf.org"
+        xmlns:temporals="urn:java:java.time.temporal.TemporalAdjusters"
         lang="">
 <head>
-    <title>Purchases</title>
+    <title>Members</title>
     <style>
         table {
             border-collapse: collapse;
@@ -21,29 +22,23 @@
     </style>
 </head>
 <body>
-<h1>My Purchases</h1>
+<h1>Members</h1>
 <div th:include="navbar/navbar :: navbar"></div>
 <table>
     <thead>
     <tr>
         <th>Username</th>
         <th>Member Number</th>
-        <th>Price</th>
+        <th>Member Type</th>
         <th>Discount</th>
-        <th>Book Name</th>
-        <th>Genre</th>
-        <th>Date</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="purchase : ${purchases}">
-        <td th:text="${purchase.member.user.username}"></td>
-        <td th:text="${purchase.member.memberNumber}"></td>
-        <td th:text="${purchase.price}"></td>
-        <td th:text="${purchase.member.discount}"></td>
-        <td th:text="${purchase.book.name}"></td>
-        <td th:text="${purchase.book.genre}"></td>
-        <td th:text="${#temporals.format(purchase.date, 'dd-MM-yyyy')}"></td>
+    <tr th:each="member : ${members}">
+        <td th:text="${member.user.username}"></td>
+        <td th:text="${member.memberNumber}"></td>
+        <td th:text="${member.type}"></td>
+        <td th:text="${member.discount}"></td>
     </tr>
     </tbody>
 </table>
