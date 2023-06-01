@@ -38,6 +38,7 @@ public class PurchaseServiceImpl extends GenericServiceImpl<Purchase> implements
         }
 
         if (member.getUser().getCreditCard().getBalance() >= book.getPrice()) {
+            book.setAmount(book.getAmount() - 1);
             genericRepository.save(new Purchase(
                     book,
                     member,

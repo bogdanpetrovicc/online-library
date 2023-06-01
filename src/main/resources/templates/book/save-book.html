@@ -4,7 +4,7 @@
     <title>Create New Book</title>
 </head>
 <body>
-<form th:action="@{/books}" method="post">
+<form method="post" th:action="@{/books}" th:object="${book}">
     <h1>Create New Book</h1>
     <div>
         <label for="authorId">Author:</label>
@@ -17,27 +17,49 @@
         </select>
     </div>
     <div>
-        <label for="bookId"></label><input hidden="hidden" type="number" id="bookId" name="bookId" th:value="${book.id}">
-    </div>
-    <div>
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" th:value="${book.name}" required>
+        <input type="text"
+               id="name"
+               name="name"
+               th:field="*{name}" required>
     </div>
     <div>
         <label for="price">Price:</label>
-        <input type="number" id="price" name="price" th:value="${book.price}" required>
+        <input type="number"
+               id="price"
+               name="price"
+               th:field="*{price}"
+               required>
     </div>
     <div>
         <label for="genre">Genre:</label>
-        <input type="text" id="genre" name="genre" th:value="${book.genre}" required>
+        <select id="genre" name="genre">
+            <option th:each="genre : ${genres}"
+                    th:value="${genre}"
+                    th:text="${genre.getValue()}">
+            </option>
+        </select>
     </div>
     <div>
-        <label for="available">Available:</label>
-        <input type="checkbox" id="available" name="available" th:checked="${book.available}">
+        <label for="amount">Amount:</label>
+        <input type="number"
+               id="amount"
+               name="amount"
+               th:field="*{amount}">
     </div>
     <div>
         <label for="description">Description:</label>
-        <textarea id="description" name="description" th:text="${book.description}"></textarea>
+        <textarea th:type="text"
+                  id="description"
+                  name="description"
+                  th:field="*{description}"></textarea>
+    </div>
+    <div>
+        <label for="image">Image:</label>
+        <input type="text"
+               id="image"
+               name="image"
+               th:field="*{image}" required>
     </div>
     <button type="submit">Create Book</button>
 </form>

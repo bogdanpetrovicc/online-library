@@ -23,10 +23,15 @@ public class MemberController {
     private final MemberService memberService;
     private final UserService userService;
 
-    //PAGES START
+    // PAGES START
     @GetMapping("")
     public String getMembers(Model model) {
-        model.addAttribute("members", memberService.findAll().stream().sorted(Comparator.comparing(Member::getType)).collect(Collectors.toList()));
+        model.addAttribute(
+                "members", memberService.findAll()
+                .stream()
+                .sorted(Comparator.comparing(Member::getType))
+                .collect(Collectors.toList())
+        );
         return "member/members";
     }
 

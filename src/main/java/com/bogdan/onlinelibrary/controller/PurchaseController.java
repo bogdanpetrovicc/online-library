@@ -1,15 +1,10 @@
 package com.bogdan.onlinelibrary.controller;
 
-import com.bogdan.onlinelibrary.entity.Member;
 import com.bogdan.onlinelibrary.exception.NotEnoughMoneyException;
-import com.bogdan.onlinelibrary.security.SecurityUtil;
-import com.bogdan.onlinelibrary.service.BookService;
-import com.bogdan.onlinelibrary.service.MemberService;
 import com.bogdan.onlinelibrary.service.PurchaseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,14 +27,14 @@ public class PurchaseController {
 
     @PostMapping("/save")
     public String savePurchase(@RequestParam("bookId") Integer bookId,
-                               @RequestParam("userId") Integer userId,
-                               Model model) {
+                               @RequestParam("userId") Integer userId) {
         try {
+            System.out.println("bookId = " + bookId);
+            System.out.println("ALAH AGBAR");
             purchaseService.savePurchase(userId, bookId);
             return "redirect:/purchases/my-purchases";
         } catch (NotEnoughMoneyException ex) {
-            model.addAttribute("errorMessage", "You don't have enough money to buy this book!");
-            return "book/books";
+            throw new RuntimeException("Not enough money!");
         }
     }
 

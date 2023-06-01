@@ -8,5 +8,4 @@ import java.util.List;
 
 @Repository
 public interface BookRepository extends GenericRepository<Book> {
-    List<Book> findAllByAvailableIsTrue();
 }

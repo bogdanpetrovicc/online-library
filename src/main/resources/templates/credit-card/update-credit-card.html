@@ -10,20 +10,33 @@
 <div th:include="navbar/navbar :: navbar"></div>
 <form th:action="@{/credit-cards/update}" method="post" th:object="${creditCard}">
     <div>
-        <label for="creditCardId"></label><input hidden="hidden" type="number" id="creditCardId" name="creditCardId"
-                                                 th:value="${creditCard.id}">
+        <label for="creditCardId"></label>
+        <input hidden="hidden"
+               type="number"
+               id="creditCardId"
+               name="creditCardId"
+               th:value="${creditCard.id}">
     </div>
     <div>
         <label for="cardNumber">Card Number:</label>
-        <input type="text" id="cardNumber" name="cardNumber" th:value="${creditCard.cardNumber}" th:required><br><br>
+        <input type="text"
+               id="cardNumber"
+               name="cardNumber"
+               th:value="${creditCard.cardNumber}" required><br><br>
     </div>
     <div>
         <label for="bank">Bank:</label>
-        <input type="text" id="bank" name="bank" th:value="${creditCard.bank}" th:required><br><br>
+        <input type="text"
+               id="bank"
+               name="bank"
+               th:value="${creditCard.bank}" required><br><br>
     </div>
     <div>
         <label for="balance">Balance:</label>
-        <input type="number" id="balance" name="balance" th:value="${creditCard.balance}" th:required><br><br>
+        <input type="number"
+               id="balance"
+               name="balance"
+               th:value="${creditCard.balance}" required><br><br>
     </div>
     <div>
         <button type="submit">Update</button>

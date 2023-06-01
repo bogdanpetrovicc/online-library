@@ -22,31 +22,25 @@
             <div class="login-form">
                 <form method="post" th:action="@{/login}">
                     <div class="form-group">
-                        <label for="username">
-                            Username
-                        </label>
-                        <input
-                                id="username"
-                                type="text"
-                                class="form-control"
-                                placeholder="Username"
-                                name="username">
+                        <label for="username">Username</label>
+                        <input id="username"
+                               type="text"
+                               class="form-control"
+                               placeholder="Username"
+                               name="username">
                     </div>
                     <div class="form-group">
-                        <label for="password">
-                            Password
-                        </label>
-                        <input
-                                id="password"
-                                type="password"
-                                class="form-control"
-                                placeholder="Password"
-                                name="password">
+                        <label for="password">Password</label>
+                        <input id="password"
+                               type="password"
+                               class="form-control"
+                               placeholder="Password"
+                               name="password">
                     </div>
                     <button onclick="redirectToRegister()" type="button" class="btn btn-black">
                         Don't have an account? Register here.
                     </button>
-                    <button type="submit" value="Log in" class="btn btn-secondary">Login</button>
+                    <button type="submit" value="Login" class="btn btn-secondary">Login</button>
                 </form>
             </div>
         </div>

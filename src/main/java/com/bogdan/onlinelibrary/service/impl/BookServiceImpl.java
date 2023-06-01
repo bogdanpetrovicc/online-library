@@ -8,8 +8,6 @@ import com.bogdan.onlinelibrary.service.BookService;
 import com.bogdan.onlinelibrary.service.generic.impl.GenericServiceImpl;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 
 @Service
 public class BookServiceImpl extends GenericServiceImpl<Book> implements BookService {
@@ -27,10 +25,5 @@ public class BookServiceImpl extends GenericServiceImpl<Book> implements BookSer
         book.setAuthor(author);
         book.setId(bookId);
         genericRepository.save(book);
-    }
-
-    @Override
-    public List<Book> findAllAvailableBooks() {
-        return ((BookRepository) genericRepository).findAllByAvailableIsTrue();
     }
 }

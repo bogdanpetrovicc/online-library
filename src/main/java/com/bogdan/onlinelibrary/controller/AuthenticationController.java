@@ -18,7 +18,7 @@ import javax.validation.Valid;
 public class AuthenticationController {
     private final UserService userService;
 
-    //PAGES START
+    // PAGES START
     @GetMapping("/")
     public String redirectToLoginPage() {
         return "redirect:/login";
@@ -35,22 +35,20 @@ public class AuthenticationController {
         model.addAttribute("creditCard", new CreditCard());
         return "register/register";
     }
-    //PAGES END
+    // PAGES END
 
     @PostMapping("/register/save")
     public String saveUser(@Valid @ModelAttribute("user") UserEntity user, BindingResult result) {
         UserEntity existingUser = userService.findByUsername(user.getUsername());
 
         if (existingUser != null) {
-            return "redirect:/register?fail";
+            throw new RuntimeException("User already exists!");
         }
-
         if (result.hasErrors()) {
-            return "register/register";
+            throw new RuntimeException("Invalid user data!");
         }
 
         userService.saveUser(user);
-
         return "book/books";
     }
 

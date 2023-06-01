@@ -29,7 +29,7 @@ public class CreditCardController {
                                    @RequestParam("creditCardId") Integer creditCardId,
                                    BindingResult result) {
         if (result.hasErrors()) {
-            return "credit-card/update-credit-card";
+            throw new RuntimeException("Credit card data are invalid!");
         }
         creditCard.setId(creditCardId);
         creditCardService.update(creditCard);

@@ -26,11 +26,12 @@
 <table>
     <thead>
     <tr>
+        <th>Image</th>
         <th>Author</th>
         <th>Name</th>
         <th>Price</th>
         <th>Genre</th>
-        <th>Available</th>
+        <th>Amount</th>
         <th>Description</th>
         <th>Action</th>
     </tr>
@@ -38,13 +39,19 @@
     <tbody>
     <tr th:each="book : ${books}">
         <td>
+            <img th:src="${book.image}"
+                 alt="Book image"
+                 width="150"
+                 height="100">
+        </td>
+        <td>
             <span th:text="${book.author.firstName}"></span>
             <span th:text="${book.author.lastName}"></span>
         </td>
         <td th:text="${book.name}"></td>
         <td th:text="${book.price}"></td>
-        <td th:text="${book.genre}"></td>
-        <td th:if="${book.available ? 'Dostupna' : 'Nedostupna'}"></td>
+        <td th:text="${book.genre.getValue()}"></td>
+        <td th:text="${book.amount > 0 ? 'Available' : 'Not available'}"></td>
         <td th:text="${book.description}"></td>
         <td th:if="${isAdmin}">
             <form th:action="@{/books/delete}" method="post" style="display: inline;">
@@ -60,7 +67,7 @@
             <form th:action="@{/purchases/save}" method="post" style="display: inline;">
                 <input type="hidden" name="bookId" th:value="${book.id}"/>
                 <input type="hidden" name="userId" th:value="${user.id}"/>
-                <button type="submit" class="btn btn-danger">Buy</button>
+                <button th:disabled="${book.amount == 0}" type="submit" class="btn btn-danger">Buy</button>
             </form>
         </td>
     </tr>

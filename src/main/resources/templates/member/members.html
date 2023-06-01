@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html
         xmlns:th="http://www.thymeleaf.org"
-        xmlns:temporals="urn:java:java.time.temporal.TemporalAdjusters"
         lang="">
 <head>
     <title>Members</title>
@@ -37,7 +36,7 @@
     <tr th:each="member : ${members}">
         <td th:text="${member.user.username}"></td>
         <td th:text="${member.memberNumber}"></td>
-        <td th:text="${member.type}"></td>
+        <td th:text="${member.type.getValue()}"></td>
         <td th:text="${member.discount}"></td>
     </tr>
     </tbody>

@@ -29,8 +29,10 @@ public class Book extends Auditable {
     @Column(name = "genre")
     @Enumerated(EnumType.STRING)
     private Genre genre;
-    @Column(name = "available")
-    private Boolean available;
+    @Column(name = "amount")
+    private Integer amount;
     @Column(name = "description")
     private String description;
+    @Column(name = "image")
+    private String image;
 }

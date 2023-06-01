@@ -2,17 +2,28 @@ package com.bogdan.onlinelibrary.controller;
 
 import com.bogdan.onlinelibrary.entity.Author;
 import com.bogdan.onlinelibrary.entity.Book;
+import com.bogdan.onlinelibrary.entity.domain.Genre;
 import com.bogdan.onlinelibrary.service.AuthorService;
 import com.bogdan.onlinelibrary.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityManager;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
 @RequiredArgsConstructor
@@ -20,13 +31,15 @@ import java.util.Map;
 public class BookController {
     private final BookService bookService;
     private final AuthorService authorService;
+    private final EntityManager entityManager;
 
     // PAGES START
     @GetMapping("/add")
     public String getAddBookPage(Model model) {
         model.addAllAttributes(Map.of(
                 "book", new Book(),
-                "authors", authorService.findAll()
+                "authors", authorService.findAll(),
+                "genres", Genre.values()
         ));
         return "book/save-book";
     }
@@ -37,7 +50,8 @@ public class BookController {
 
         model.addAllAttributes(List.of(
                 "book", book,
-                "authors", authorService.findAll()
+                "authors", authorService.findAll(),
+                "genres", Genre.values()
         ));
 
         return "book/update-book";
@@ -45,7 +59,7 @@ public class BookController {
 
     @GetMapping("")
     public String getAvailableBooks(Model model) {
-        model.addAttribute("books", bookService.findAllAvailableBooks());
+        model.addAttribute("books", bookService.findAll());
         return "book/books";
     }
     // PAGES END
@@ -53,16 +67,15 @@ public class BookController {
     @PostMapping("")
     public String saveBook(@Valid @ModelAttribute("book") Book book,
                            @RequestParam("authorId") Integer authorId,
-                           BindingResult result, Model model) {
+                           BindingResult result) {
         if (result.hasErrors()) {
-            model.addAttribute("authors", authorService.findAll());
-            return "book/save-book";
+            throw new RuntimeException("Book data are invalid!");
         }
 
         Author author = authorService.findById(authorId);
         book.setAuthor(author);
-        bookService.save(book);
 
+        bookService.save(book);
         return "redirect:/books";
     }
 
@@ -76,10 +89,9 @@ public class BookController {
     public String updateBook(@Valid @ModelAttribute("book") Book book,
                              @RequestParam("bookId") Integer bookId,
                              @RequestParam("authorId") Integer authorId,
-                             BindingResult result, Model model) {
+                             BindingResult result) {
         if (result.hasErrors()) {
-            model.addAttribute("authors", authorService.findAll());
-            return "book/save-book";
+            throw new RuntimeException("Book data are invalid!");
         }
         bookService.updateBook(book, bookId, authorId);
         return "redirect:/books";

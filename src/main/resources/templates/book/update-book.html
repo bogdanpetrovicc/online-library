@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="">
 <head>
-    <title>Create New Book</title>
+    <title>Update Book</title>
 </head>
 <body>
 <div th:include="navbar/navbar :: navbar"></div>
 <form th:action="@{/update}" method="post" th:object="${book}">
     <h1>Update Book</h1>
+    <div>
+        <label for="image">Image:</label>
+        <input type="text" id="image" th:value="${book.image}">
+    </div>
     <div>
         <label for="authorId">Author:</label>
         <select id="authorId" name="authorId">
@@ -19,30 +23,51 @@
         </select>
     </div>
     <div>
-        <label for="bookId"></label><input hidden="hidden" type="number" id="bookId" name="bookId"
-                                           th:value="${book.id}">
+        <label for="bookId"></label>
+        <input hidden="hidden"
+               type="number"
+               id="bookId"
+               name="bookId"
+               th:value="${book.id}">
     </div>
     <div>
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" th:value="${book.name}" required>
+        <input type="text"
+               id="name"
+               name="name"
+               th:value="${book.name}" required>
     </div>
     <div>
         <label for="price">Price:</label>
-        <input type="number" id="price" name="price" th:value="${book.price}" required>
+        <input type="number"
+               id="price"
+               name="price"
+               th:value="${book.price}" required>
     </div>
     <div>
         <label for="genre">Genre:</label>
-        <input type="text" id="genre" name="genre" th:value="${book.genre}" required>
+        <select id="genre" name="genre">
+            <option th:each="genre : ${genres}"
+                    th:value="${genre}"
+                    th:selected="${book.genre == genre}"
+                    th:text="${genre.getValue()}">
+            </option>
+        </select>
     </div>
     <div>
-        <label for="available">Available:</label>
-        <input type="checkbox" id="available" name="available" th:checked="${book.available}">
+        <label for="amount">Amount:</label>
+        <input type="number"
+               id="amount"
+               name="amount"
+               th:value="${book.amount}">
     </div>
     <div>
         <label for="description">Description:</label>
-        <textarea id="description" name="description" th:text="${book.description}"></textarea>
+        <textarea id="description"
+                  name="description"
+                  th:text="${book.description}"></textarea>
     </div>
-    <button type="submit">Create Book</button>
+    <button type="submit">Update Book</button>
 </form>
 </body>
 </html>
