@@ -81,12 +81,7 @@ public class BookController {
             model.addAttribute("authors", authorService.findAll());
             return "book/save-book";
         }
-
-        Author author = authorService.findById(authorId);
-        book.setAuthor(author);
-        book.setId(bookId);
-        bookService.update(book);
-
+        bookService.updateBook(book, bookId, authorId);
         return "redirect:/books";
     }
 }
