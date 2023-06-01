@@ -5,6 +5,7 @@ import com.bogdan.onlinelibrary.service.generic.GenericService;
 
 import java.util.List;
 
+
 public interface BookService extends GenericService<Book> {
     List<Book> findAllAvailableBooks();
 }
