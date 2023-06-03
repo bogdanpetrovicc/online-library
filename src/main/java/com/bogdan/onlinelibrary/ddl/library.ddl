@@ -16,17 +16,17 @@ create table book
 (
     book_id            int auto_increment
         primary key,
-    author_fk          int                                      not null,
-    name               varchar(254)                             not null,
-    price              double                                   not null,
-    genre              varchar(128)                             not null,
-    available          tinyint                                  not null,
-    category           varchar(128)                             not null,
-    description        varchar(1024)                            not null,
-    created_date       timestamp    default current_timestamp() null,
-    last_modified_date timestamp    default current_timestamp() null,
-    last_modified_by   varchar(128) default 'system'            null,
-    record_status      int          default 1                   null,
+    author_fk          int                                                       not null,
+    name               varchar(254) collate utf8_bin                             not null,
+    price              double                                                    not null,
+    image              varchar(1024)                                             null,
+    genre              varchar(128) collate utf8_bin                             not null,
+    amount             int                                                       not null,
+    description        varchar(1024) collate utf8_bin                            not null,
+    created_date       timestamp                     default current_timestamp() null,
+    last_modified_date timestamp                     default current_timestamp() null,
+    last_modified_by   varchar(128) collate utf8_bin default 'system'            null,
+    record_status      int                           default 1                   null,
     constraint fk_author_book
         foreign key (author_fk) references author (author_id)
             on update cascade on delete cascade
@@ -42,7 +42,9 @@ create table credit_card
     created_date       timestamp    default current_timestamp() null,
     last_modified_date timestamp    default current_timestamp() null,
     last_modified_by   varchar(128) default 'system'            null,
-    record_status      int          default 1                   null
+    record_status      int          default 1                   null,
+    constraint card_number
+        unique (card_number)
 );
 
 create table role
@@ -60,7 +62,7 @@ create table user
 (
     user_id            int auto_increment
         primary key,
-    credit_card_fk     int                                      not null,
+    credit_card_fk     int                                      null,
     role_fk            int                                      not null,
     username           varchar(254)                             not null,
     password           varchar(254)                             not null,
