@@ -1,81 +1,84 @@
 <!DOCTYPE html>
-<html
-        xmlns:th="http://www.thymeleaf.org"
-        lang="">
+<html xmlns:th="http://www.thymeleaf.org" lang="">
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <title>BuyBook</title>
     <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
+        body {
+            background-color: #2e3440;
         }
 
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
+        h1 {
+            color: #ffffff;
+            text-align: center;
         }
 
-        th {
-            background-color: #f2f2f2;
+        .card {
+            padding: 0.5rem !important;
+            margin: 0 1rem 1rem 0 !important;
         }
+
+        .card-container {
+            margin-left: 50px;
+            margin-right: 50px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card-img-top {
+            height: 22rem !important;
+            object-fit: cover !important;
+        }
+
+        .create-button {
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+
     </style>
 </head>
 <body>
 <div th:include="navbar/navbar :: navbar"></div>
+<br><br>
 <h1>Books</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Image</th>
-        <th>Author</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Genre</th>
-        <th>Amount</th>
-        <th>Description</th>
-        <th>Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="book : ${books}">
-        <td>
-            <img th:src="${book.image}"
-                 alt="Book image"
-                 width="150"
-                 height="100">
-        </td>
-        <td>
-            <span th:text="${book.author.firstName}"></span>
-            <span th:text="${book.author.lastName}"></span>
-        </td>
-        <td th:text="${book.name}"></td>
-        <td th:text="${book.price}"></td>
-        <td th:text="${book.genre.getValue()}"></td>
-        <td th:text="${book.amount > 0 ? 'Available' : 'Not available'}"></td>
-        <td th:text="${book.description}"></td>
-        <td th:if="${isAdmin}">
-            <form th:action="@{/books/delete}" method="post" style="display: inline;">
-                <input type="hidden" name="id" th:value="${book.id}"/>
-                <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-danger">Delete</button>
-            </form>
-            <form th:action="@{/books/update}" method="get" style="display: inline;">
-                <input type="hidden" name="bookId" th:value="${book.id}"/>
-                <button type="submit" class="btn btn-primary">Update</button>
-            </form>
-        </td>
-        <td th:if="${!isAdmin}">
-            <form th:action="@{/purchases/save}" method="post" style="display: inline;">
-                <input type="hidden" name="bookId" th:value="${book.id}"/>
-                <input type="hidden" name="userId" th:value="${user.id}"/>
-                <button th:disabled="${book.amount == 0}" type="submit" class="btn btn-danger">Buy</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<button th:if="${isAdmin}" onclick="redirectToCreateBookPage()" class="btn btn-success">Create New Book</button>
+<br>
+<button th:if="${isAdmin}" onclick="redirectToCreateBookPage()" class="btn btn-success create-button">Create New Book</button>
+<br>
+<div class="card-container">
+    <div class="card" th:each="book : ${books}">
+        <img th:src="${book.image}" alt="Book Image" class="card-img-top">
+        <div class="card-body">
+            <h5 class="card-title" th:text="${book.name}"></h5>
+            <p class="card-text">Author: <span th:text="${book.author.firstName + ' ' + book.author.lastName}"></span></p>
+            <p class="card-text">Price: <span th:text="${book.price}"></span></p>
+            <p class="card-text">Genre: <span th:text="${book.genre.getValue()}"></span></p>
+            <p class="card-text">Amount: <span th:text="${book.amount > 0 ? 'Available' : 'Not available'}"></span></p>
+            <p class="card-text">Description: <span th:text="${book.description}"></span></p>
+            <div th:if="${isAdmin}">
+                <form th:action="@{/books/delete}" method="post" style="display: inline;">
+                    <input type="hidden" name="id" th:value="${book.id}"/>
+                    <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-danger">Delete
+                    </button>
+                </form>
+                <form th:action="@{/books/update}" method="get" style="display: inline;">
+                    <input type="hidden" name="bookId" th:value="${book.id}"/>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+            <div th:if="${!isAdmin}">
+                <form th:action="@{/purchases/save}" method="post" style="display: inline;">
+                    <input type="hidden" name="bookId" th:value="${book.id}"/>
+                    <input type="hidden" name="userId" th:value="${user.id}"/>
+                    <button th:disabled="${book.amount == 0}" type="submit" class="btn btn-danger">Buy</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script th:inline="javascript">
     function redirectToCreateBookPage() {
         window.location.href = "books/add";
