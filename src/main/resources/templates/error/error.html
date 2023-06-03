@@ -1,10 +1,71 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="">
+
 <head>
-    <title>Error</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <title>BuyBook</title>
+    <style>
+        body {
+            background-color: #2e3440;
+        }
+
+        .main {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .error-container {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 5px;
+            max-width: 400px;
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .error-container h1 {
+            color: #4c566a;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .error-container p {
+            color: #4c566a;
+            font-size: 1.5rem;
+        }
+
+        .error-image {
+            margin-top: 20px;
+            max-width: 300px;
+            height: auto;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
 </head>
+
 <body>
-<h1>Error</h1>
-<p th:text="${errorMessage}">Something went wrong! Try again.</p>
+<section>
+    <div class="main">
+        <div class="error-container">
+            <h1 class="title">Error</h1>
+            <p class="error-message" th:text="${errorMessage}">Something went wrong! Try again.</p>
+            <img src="https://st.depositphotos.com/1006899/2650/i/600/depositphotos_26505551-stock-photo-error-metaphor.jpg"
+                 alt="Oops" class="error-image">
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>

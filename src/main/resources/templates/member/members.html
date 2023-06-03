@@ -1,45 +1,65 @@
 <!DOCTYPE html>
-<html
-        xmlns:th="http://www.thymeleaf.org"
-        lang="">
+<html xmlns:th="http://www.thymeleaf.org" lang="">
 <head>
-    <title>Members</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <style>
+        body {
+            background-color: #2e3440;
+        }
+
+        h1 {
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .table-container {
+            margin-top: 20px;
+            max-width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         table {
-            border-collapse: collapse;
             width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
         }
 
         th, td {
-            border: 1px solid black;
-            padding: 8px;
-        }
-
-        th {
-            background-color: #f2f2f2;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #4c566a;
         }
     </style>
+    <title>BuyBook</title>
 </head>
 <body>
-<h1>Members</h1>
 <div th:include="navbar/navbar :: navbar"></div>
-<table>
-    <thead>
-    <tr>
-        <th>Username</th>
-        <th>Member Number</th>
-        <th>Member Type</th>
-        <th>Discount</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="member : ${members}">
-        <td th:text="${member.user.username}"></td>
-        <td th:text="${member.memberNumber}"></td>
-        <td th:text="${member.type.getValue()}"></td>
-        <td th:text="${member.discount}"></td>
-    </tr>
-    </tbody>
-</table>
+<br><br>
+<h1>Members</h1>
+<div class="table-container">
+    <table class="table table-hover table-bordered table-striped">
+        <thead class="table-light">
+        <tr>
+            <th>Username</th>
+            <th>Member Number</th>
+            <th>Member Type</th>
+            <th>Discount</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="member : ${members}" th:class="${member.type.getValue() == 'Premium' ? 'table-primary' : ''}">
+            <td th:text="${member.user.username}"></td>
+            <td th:text="${member.memberNumber}"></td>
+            <td th:text="${member.type.getValue()}"></td>
+            <td th:text="${member.discount}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
 </body>
 </html>

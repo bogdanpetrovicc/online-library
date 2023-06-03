@@ -1,51 +1,90 @@
 <!DOCTYPE html>
-<html
-        xmlns:th="http://www.thymeleaf.org"
-        lang="">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:temporals="urn:java:java.time.temporal.TemporalAdjusters" lang="">
 <head>
-    <title>Purchases</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <title>BuyBook</title>
     <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
+        body {
+            background-color: #2e3440;
         }
 
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
+        h1 {
+            color: #ffffff;
+            text-align: center;
         }
 
-        th {
-            background-color: #f2f2f2;
+        .card {
+            padding: 0.5rem !important;
+            margin-right: 1rem !important;
         }
+
+        .card-container {
+            margin-top: 20px;
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            flex-wrap: nowrap;
+            padding: 10px;
+            flex-direction: row;
+        }
+
+        .discount-cloud {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #ffffff;
+            color: #2e3440;
+            padding: 0.2rem 0.5rem;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 14px;
+            margin-top: 10px;
+            margin-right: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .member-number-cloud {
+            position: relative;
+            text-align: center;
+            background-color: #ffffff;
+            color: #2e3440;
+            padding: 0.2rem 0.5rem;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 0 40% 0 40%;
+        }
+
+        .member-number-text {
+            font-weight: bold;
+        }
+
     </style>
 </head>
 <body>
-<h1>My Purchases</h1>
 <div th:include="navbar/navbar :: navbar"></div>
-<table>
-    <thead>
-    <tr>
-        <th>Member Number</th>
-        <th>Price</th>
-        <th>Discount</th>
-        <th>Book Image</th>
-        <th>Book Name</th>
-        <th>Genre</th>
-        <th>Date</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="purchase : ${purchases}">
-        <td th:text="${purchase.member.memberNumber}"></td>
-        <td th:text="${purchase.price}"></td>
-        <td th:text="${purchase.member.discount}"></td>
-        <td><img th:src="${purchase.book.image}"></td>
-        <td th:text="${purchase.book.name}"></td>
-        <td th:text="${purchase.book.genre.getValue()}"></td>
-        <td th:text="${#temporals.format(purchase.date, 'dd-MM-yyyy')}"></td>
-    </tr>
-    </tbody>
-</table>
+<br><br>
+<h1>My Purchases</h1>
+<div class="member-number-cloud">
+    Member Number: <span class="member-number-text" th:text="${member.memberNumber}"></span>
+</div>
+<div class="card-container">
+    <div class="card" th:each="purchase : ${purchases}">
+        <img th:src="${purchase.book.image}" alt="Book Image" class="card-img-top">
+        <div class="card-body">
+            <h5 class="card-title" th:text="${purchase.book.name}"></h5>
+            <div th:if="${purchase.member.discount != 0}" class="discount-cloud">
+                Discount: <span th:text="${purchase.member.discount}">%</span>
+            </div>
+            <p class="card-text">Price: <span th:text="${purchase.price}"></span></p>
+            <p class="card-text">Genre: <span th:text="${purchase.book.genre.getValue()}"></span></p>
+            <p class="card-text">Date: <span th:text="${#temporals.format(purchase.date, 'dd-MM-yyyy')}"></span></p>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
 </body>
 </html>

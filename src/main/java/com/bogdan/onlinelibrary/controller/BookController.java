@@ -48,7 +48,7 @@ public class BookController {
     public String getUpdateBookPage(@RequestParam(value = "bookId", required = false) Integer bookId, Model model) {
         Book book = bookId != null ? bookService.findById(bookId) : new Book();
 
-        model.addAllAttributes(List.of(
+        model.addAllAttributes(Map.of(
                 "book", book,
                 "authors", authorService.findAll(),
                 "genres", Genre.values()

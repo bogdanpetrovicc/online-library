@@ -1,54 +1,85 @@
-<html
-        xmlns:th="http://thymeleaf.org"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://thymeleaf.org " lang="">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://thymeleaf.org" lang="">
+
 <head>
-    <title>Login</title>
-</head>
-<section>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <title>BuyBook</title>
     <style>
-        .main {
-            padding: 0 10px;
+        body {
+            background-color: #2e3440;
         }
+
+        .main {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .login-container {
+            box-shadow: 0 10px 20px rgba(254, 231, 254, 0.6);
+            padding: 30px;
+            background-color: #FFFFFFFF;
+            border-radius: 5px;
+            max-width: 400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .login-container h1 {
+            color: #4c566a;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .login-container label {
+            color: #4c566a;
+            font-weight: 500;
+        }
+
+        .login-container .form-control {
+            padding: 10px;
+        }
+
     </style>
+</head>
+
+<body>
+<section>
     <div class="main">
-        <div class="col-md-6 col-sm-12">
-            <div th:if="${param.error}" class="alert alert-success">
-                Invalid username and password.
-            </div>
-            <div th:if="${param.logout}" class="alert alert-success">
-                You have been logged out.
-            </div>
-            <div class="login-form">
-                <form method="post" th:action="@{/login}">
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <input id="username"
-                               type="text"
-                               class="form-control"
-                               placeholder="Username"
-                               name="username">
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input id="password"
-                               type="password"
-                               class="form-control"
-                               placeholder="Password"
-                               name="password">
-                    </div>
-                    <button onclick="redirectToRegister()" type="button" class="btn btn-black">
-                        Don't have an account? Register here.
-                    </button>
-                    <button type="submit" value="Login" class="btn btn-secondary">Login</button>
-                </form>
-            </div>
+        <div class="login-container">
+            <h1 class="title">Login</h1>
+            <form method="post" th:action="@{/login}">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username:</label>
+                    <input id="username" type="text" class="form-control" placeholder="Username" name="username">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password:</label>
+                    <input id="password" type="password" class="form-control" placeholder="Password" name="password">
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+                <div class="d-grid gap-2 mb-3">
+                    <button onclick="redirectToRegister()" type="button" class="btn btn-outline-info">Don't have an account? Register here.</button>
+                </div>
+            </form>
         </div>
     </div>
 </section>
+
 <script>
     function redirectToRegister() {
         window.location.href = "/online-library/register";
     }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+</body>
+
 </html>
