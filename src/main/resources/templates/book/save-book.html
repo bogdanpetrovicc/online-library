@@ -7,6 +7,13 @@
 <form method="post" th:action="@{/books}" th:object="${book}">
     <h1>Create New Book</h1>
     <div>
+        <label for="image">Image:</label>
+        <input type="text"
+               id="image"
+               name="image"
+               th:field="*{image}" required>
+    </div>
+    <div>
         <label for="authorId">Author:</label>
         <select id="authorId" name="authorId">
             <option value="">Select Author</option>
@@ -53,13 +60,6 @@
                   id="description"
                   name="description"
                   th:field="*{description}"></textarea>
-    </div>
-    <div>
-        <label for="image">Image:</label>
-        <input type="text"
-               id="image"
-               name="image"
-               th:field="*{image}" required>
     </div>
     <button type="submit">Create Book</button>
 </form>
