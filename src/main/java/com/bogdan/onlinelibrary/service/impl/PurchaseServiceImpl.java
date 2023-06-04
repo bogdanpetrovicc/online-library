@@ -37,17 +37,21 @@ public class PurchaseServiceImpl extends GenericServiceImpl<Purchase> implements
             book.setPrice(book.getPrice() * member.getDiscount() / 100);
         }
 
-        if (member.getUser().getCreditCard().getBalance() >= book.getPrice()) {
+        double purchasePrice = book.getPrice();
+
+        if (member.getUser().getCreditCard().getBalance() >= purchasePrice) {
             book.setAmount(book.getAmount() - 1);
             genericRepository.save(new Purchase(
                     book,
                     member,
                     LocalDate.now(),
-                    book.getPrice()
+                    purchasePrice
             ));
             member.getUser().getCreditCard().setBalance(
                     member.getUser().getCreditCard().getBalance() - book.getPrice()
             );
+
+            bookService.save(book);
             memberService.save(member);
         } else {
             throw new NotEnoughMoneyException();
