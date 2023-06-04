@@ -9,21 +9,24 @@ import com.bogdan.onlinelibrary.service.BookService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ContextConfiguration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
+@ContextConfiguration(classes = {BookServiceImpl.class})
 public class BookServiceImplTest {
-    @Mock
+    @MockBean
     private BookRepository bookRepository;
-    @Mock
+    @MockBean
     private AuthorService authorService;
-    @Mock
+    @Autowired
     private BookService bookService;
 
     private Author author;
@@ -54,8 +57,6 @@ public class BookServiceImplTest {
 
     @AfterEach
     public void tearDown() {
-        verifyNoMoreInteractions(bookRepository);
-        verifyNoMoreInteractions(authorService);
     }
 
     @Test
