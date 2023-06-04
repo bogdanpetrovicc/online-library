@@ -1,6 +1,7 @@
 package com.bogdan.onlinelibrary.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import java.util.Locale;
 @Data
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "role")
 public class Role extends Auditable implements GrantedAuthority {

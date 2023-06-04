@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PurchaseService extends GenericService<Purchase> {
 
-    void savePurchase(Integer userId, Integer bookId);
+    Purchase savePurchase(Integer userId, Integer bookId);
 
     List<Purchase> findAllByLoggedInMember();
 }

@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Data
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "member")
 public class Member extends Auditable {

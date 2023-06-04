@@ -6,5 +6,5 @@ import com.bogdan.onlinelibrary.service.generic.GenericService;
 
 public interface BookService extends GenericService<Book> {
 
-    void updateBook(Book book, Integer bookId, Integer authorId);
+    Book updateBook(Book book, Integer bookId, Integer authorId);
 }

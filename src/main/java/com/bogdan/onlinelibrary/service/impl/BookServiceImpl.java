@@ -20,10 +20,11 @@ public class BookServiceImpl extends GenericServiceImpl<Book> implements BookSer
     }
 
     @Override
-    public void updateBook(Book book, Integer bookId, Integer authorId) {
+    public Book updateBook(Book book, Integer bookId, Integer authorId) {
         Author author = authorService.findById(authorId);
         book.setAuthor(author);
         book.setId(bookId);
         genericRepository.save(book);
+        return book;
     }
 }

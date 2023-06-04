@@ -8,7 +8,7 @@ public interface UserService extends GenericService<UserEntity> {
 
     UserEntity getLoggedInUser();
 
-    void saveUser(UserEntity user);
+    UserEntity saveUser(UserEntity user);
 
     boolean isUserAdmin();
 }

@@ -29,30 +29,32 @@ public class PurchaseServiceImpl extends GenericServiceImpl<Purchase> implements
     }
 
     @Override
-    public void savePurchase(Integer userId, Integer bookId) {
+    public Purchase savePurchase(Integer userId, Integer bookId) {
         Member member = memberService.findByUserId(userId);
         Book book = bookService.findById(bookId);
 
         if (member.getType() == MemberType.PREMIUM) {
-            book.setPrice(book.getPrice() * member.getDiscount() / 100);
+            book.setPrice(book.getPrice() - (book.getPrice() * member.getDiscount() / 100));
         }
 
         double purchasePrice = book.getPrice();
 
         if (member.getUser().getCreditCard().getBalance() >= purchasePrice) {
             book.setAmount(book.getAmount() - 1);
-            genericRepository.save(new Purchase(
-                    book,
-                    member,
-                    LocalDate.now(),
-                    purchasePrice
-            ));
             member.getUser().getCreditCard().setBalance(
                     member.getUser().getCreditCard().getBalance() - book.getPrice()
             );
 
             bookService.save(book);
             memberService.save(member);
+
+            return genericRepository.save(new Purchase(
+                    book,
+                    member,
+                    LocalDate.now(),
+                    purchasePrice
+            ));
+
         } else {
             throw new NotEnoughMoneyException();
         }

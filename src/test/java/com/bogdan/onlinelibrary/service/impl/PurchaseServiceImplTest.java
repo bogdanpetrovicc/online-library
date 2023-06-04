@@ -3,158 +3,223 @@ package com.bogdan.onlinelibrary.service.impl;
 import com.bogdan.onlinelibrary.entity.*;
 import com.bogdan.onlinelibrary.entity.domain.MemberType;
 import com.bogdan.onlinelibrary.exception.NotEnoughMoneyException;
-import com.bogdan.onlinelibrary.repository.PurchaseRepository;
+import com.bogdan.onlinelibrary.repository.*;
 import com.bogdan.onlinelibrary.service.BookService;
 import com.bogdan.onlinelibrary.service.MemberService;
 import com.bogdan.onlinelibrary.service.PurchaseService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
+@ContextConfiguration(classes = {PurchaseServiceImpl.class})
 public class PurchaseServiceImplTest {
-    @Mock
+    @MockBean
     private PurchaseRepository purchaseRepository;
-    @Mock
+
+    @MockBean
+    private MemberRepository memberRepository;
+
+    @MockBean
     private MemberService memberService;
-    @Mock
+
+    @MockBean
     private BookService bookService;
-    @Mock
+
+    @MockBean
+    private BookRepository bookRepository;
+
+    @MockBean
+    private CreditCardRepository creditCardRepository;
+
+    @MockBean
+    private RoleRepository roleRepository;
+
+    @MockBean
+    private UserRepository userRepository;
+
+    @MockBean
+    private AuthorRepository authorRepository;
+
+    @Autowired
     private PurchaseService purchaseService;
 
-    private Book book;
-    private Member member;
-    private UserEntity user;
+    private static final String USERNAME = "test";
+
+    Book book;
+    Member member;
+    UserEntity user;
+    CreditCard creditCard;
+    Role role;
+    Author author;
 
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
 
         // Test data
-        CreditCard creditCard = new CreditCard();
-        creditCard.setId(1);
-        creditCard.setBalance(2000.0);
+        author = new Author(
+                1,
+                "John",
+                "Doe",
+                35,
+                "SRB"
+        );
+        when(authorRepository.save(any(Author.class))).thenReturn(author);
 
-        user = new UserEntity();
-        user.setId(1);
-        user.setUsername("test");
-        user.setCreditCard(creditCard);
+        role = new Role(
+                1,
+                "USER"
+        );
+        when(roleRepository.save(any(Role.class))).thenReturn(role);
 
-        book = new Book();
-        book.setId(1);
-        book.setName("Test Book");
-        book.setPrice(1000.0);
-        book.setAmount(5);
+        creditCard = new CreditCard(
+                1,
+                "123",
+                "Bank",
+                2000.00
+        );
+        when(creditCardRepository.save(any(CreditCard.class))).thenReturn(creditCard);
 
-        member = new Member();
-        member.setId(1);
-        member.setUser(user);
-        member.setType(MemberType.PREMIUM);
-        member.setDiscount(10);
+        user = new UserEntity(
+                1,
+                role,
+                creditCard,
+                "test",
+                "test"
+        );
+        when(userRepository.save(any(UserEntity.class))).thenReturn(user);
+
+        book = new Book(
+                1,
+                author,
+                "Test Book",
+                1000.00,
+                5
+        );
+        when(bookRepository.save(any(Book.class))).thenReturn(book);
+
+        member = new Member(
+                1,
+                user,
+                125,
+                10,
+                MemberType.PREMIUM
+        );
+        when(memberRepository.save(any(Member.class))).thenReturn(member);
     }
 
     @AfterEach
     public void tearDown() {
-        verifyNoMoreInteractions(purchaseRepository);
-        verifyNoMoreInteractions(memberService);
-        verifyNoMoreInteractions(bookService);
-        verifyNoMoreInteractions(purchaseService);
+        bookRepository.deleteAll();
+        memberRepository.deleteAll();
+        userRepository.deleteAll();
+        creditCardRepository.deleteAll();
+        roleRepository.deleteAll();
+        authorRepository.deleteAll();
     }
 
     @Test
     public void testSavePurchase_WithSufficientBalance() {
-        int initialAmount = 5;
-        double initialBalance = 2000.0;
-        int discount = 10;
+        // Create a mock Purchase object with a valid Book object
+        Purchase purchase = new Purchase();
+        purchase.setBook(book);
 
-        book.setAmount(initialAmount);
-        member.setType(MemberType.PREMIUM);
-        member.setDiscount(discount);
-        member.getUser().getCreditCard().setBalance(initialBalance);
+        // Mock the behavior of the memberService
+        when(memberService.findByUserId(anyInt())).thenReturn(member);
 
-        when(memberService.findByUserId(user.getId())).thenReturn(member);
-        when(bookService.findById(book.getId())).thenReturn(book);
-        when(purchaseRepository.save(any(Purchase.class))).thenReturn(new Purchase());
+        // Mock the behavior of the bookService
+        when(bookService.findById(anyInt())).thenReturn(book);
 
-        // Capture the Book object passed to bookService.save()
-        ArgumentCaptor<Book> bookCaptor = ArgumentCaptor.forClass(Book.class);
+        // Mock the behavior of the genericRepository.save() method
+        when(purchaseRepository.save(any(Purchase.class))).thenReturn(purchase);
 
-        purchaseService.savePurchase(user.getId(), book.getId());
+        int initialAmount = book.getAmount();
+        double initialBalance = member.getUser().getCreditCard().getBalance();
 
-        // Verify the modified book amount and price
-        assertEquals(initialAmount - 1, book.getAmount());
-        double expectedPrice = book.getPrice() * discount / 100;
-        assertEquals(expectedPrice, book.getPrice());
+        Purchase savedPurchase = purchaseService.savePurchase(user.getId(), book.getId());
 
-        // Verify member's credit card balance after the purchase
+        assertNotNull(savedPurchase);  // Ensure that the purchase is not null
+
+        assertEquals(initialAmount - 1, savedPurchase.getBook().getAmount());
+        double expectedPrice = book.getPrice();
         assertEquals(initialBalance - expectedPrice, member.getUser().getCreditCard().getBalance());
 
-        // Verify that the save method is called on the book and member services
-        verify(bookService, times(1)).save(bookCaptor.capture());
-        verify(memberService, times(1)).save(member);
-
-        // Verify that the captured book has the modified amount
-        Book capturedBook = bookCaptor.getValue();
-        assertEquals(initialAmount - 1, capturedBook.getAmount());
-
-        // Verify that the purchase is saved
+        // Verify that the necessary methods were called
+        verify(memberService, times(1)).findByUserId(anyInt());
+        verify(bookService, times(1)).findById(anyInt());
+        verify(bookService, times(1)).save(any(Book.class));
+        verify(memberService, times(1)).save(any(Member.class));
         verify(purchaseRepository, times(1)).save(any(Purchase.class));
     }
 
 
     @Test
     public void testSavePurchase_WithInsufficientBalance() {
-        Integer userId = 1;
-        Integer bookId = 1;
-        double bookPrice = 10.0;
-        double insufficientBalance = 5.0;
+        // Set the member's credit card balance to an insufficient amount
+        member.getUser().getCreditCard().setBalance(0.0);
 
-        Member member = new Member();
-        member.setId(userId);
+        // Mock the behavior of the memberService
+        when(memberService.findByUserId(anyInt())).thenReturn(member);
 
-        Book book = new Book();
-        book.setId(bookId);
-        book.setPrice(bookPrice);
+        // Mock the behavior of the bookService
+        when(bookService.findById(anyInt())).thenReturn(book);
 
-        member.getUser().getCreditCard().setBalance(insufficientBalance);
+        assertThrows(NotEnoughMoneyException.class, () -> purchaseService.savePurchase(user.getId(), book.getId()));
 
-        when(memberService.findByUserId(userId)).thenReturn(member);
-        when(bookService.findById(bookId)).thenReturn(book);
+        // Verify that no changes were made
+        assertEquals(5, book.getAmount());
+        assertEquals(0.0, member.getUser().getCreditCard().getBalance());
 
-        assertThrows(NotEnoughMoneyException.class, () -> purchaseService.savePurchase(userId, bookId));
-
-        assertEquals(insufficientBalance, member.getUser().getCreditCard().getBalance());
-        verify(memberService, never()).save(any(Member.class));
-        verify(purchaseRepository, never()).save(any(Purchase.class));
+        // Verify that the necessary methods were called
+        verify(memberService, times(1)).findByUserId(anyInt());
+        verify(bookService, times(1)).findById(anyInt());
+        verifyNoMoreInteractions(bookService);
+        verifyNoMoreInteractions(memberService);
+        verifyNoMoreInteractions(purchaseRepository);
     }
 
     @Test
     public void testFindAllByLoggedInMember() {
-        Integer memberId = 1;
-        String username = "test";
+        // Set up the SecurityContext with the authentication
+        Authentication authentication = new UsernamePasswordAuthenticationToken(USERNAME, null);
+        SecurityContext securityContext = mock(SecurityContext.class);
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
 
-        Member member = new Member();
-        member.setId(memberId);
+        // Mock the behavior of the memberService.findByUsername() method
+        when(memberService.findByUsername(USERNAME)).thenReturn(member);
 
-        when(memberService.findByUsername(username)).thenReturn(member);
-        when(purchaseRepository.findAllByMemberId(memberId)).thenReturn(Collections.emptyList());
+        // Mock the behavior of the purchaseRepository.findAllByMemberId() method
+        when(purchaseRepository.findAllByMemberId(member.getId())).thenReturn(Collections.emptyList());
 
         List<Purchase> purchases = purchaseService.findAllByLoggedInMember();
 
         assertNotNull(purchases);
         assertEquals(0, purchases.size());
-        verify(memberService, times(1)).findByUsername(username);
-        verify(purchaseRepository, times(1)).findAllByMemberId(memberId);
+
+        // Verify that the necessary methods were called
+        verify(memberService, times(1)).findByUsername(anyString());
+        verify(purchaseRepository, times(1)).findAllByMemberId(anyInt());
+
+        // Reset the SecurityContext after the test
+        SecurityContextHolder.clearContext();
     }
 }

@@ -1,6 +1,7 @@
 package com.bogdan.onlinelibrary.entity;
 
 import com.bogdan.onlinelibrary.entity.domain.Genre;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -35,4 +36,12 @@ public class Book extends Auditable {
     private String description;
     @Column(name = "image")
     private String image;
+
+    public Book(Integer id, Author author, String name, Double price, Integer amount) {
+        this.id = id;
+        this.author = author;
+        this.name = name;
+        this.price = price;
+        this.amount = amount;
+    }
 }

@@ -9,6 +9,8 @@ import com.bogdan.onlinelibrary.service.CreditCardService;
 import com.bogdan.onlinelibrary.service.generic.impl.GenericServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CreditCardServiceImpl extends GenericServiceImpl<CreditCard> implements CreditCardService {
 
@@ -22,7 +24,15 @@ public class CreditCardServiceImpl extends GenericServiceImpl<CreditCard> implem
     @Override
     public CreditCard findByLoggedInUser() {
         String username = SecurityUtil.getSessionUser();
-        UserEntity user = userRepository.findByUsername(username).orElse(null);
-        return user.getId() != null ? userRepository.findById(user.getId()).get().getCreditCard() : new CreditCard();
+        Optional<UserEntity> optionalUser = userRepository.findByUsername(username);
+
+        if (optionalUser.isPresent()) {
+            UserEntity user = optionalUser.get();
+            return userRepository.findById(user.getId())
+                    .map(UserEntity::getCreditCard)
+                    .orElse(new CreditCard());
+        } else {
+            return new CreditCard();
+        }
     }
 }

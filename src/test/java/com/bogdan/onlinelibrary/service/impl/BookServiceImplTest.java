@@ -63,12 +63,14 @@ public class BookServiceImplTest {
         Integer bookId = 1;
         Integer authorId = 1;
 
+        when(bookRepository.save(book)).thenReturn(book);
+        when(authorService.findById(authorId)).thenReturn(author);
+
         book.setName("Test");
+        Book updatedBook = bookService.updateBook(book, bookId, authorId);
 
-        bookService.updateBook(book, bookId, authorId);
-
-        assertEquals(authorId, book.getAuthor().getId());
-        assertEquals(bookId, book.getId());
-        assertEquals("Test", book.getName());
+        assertEquals(authorId, updatedBook.getAuthor().getId());
+        assertEquals(bookId, updatedBook.getId());
+        assertEquals("Test", updatedBook.getName());
     }
 }
