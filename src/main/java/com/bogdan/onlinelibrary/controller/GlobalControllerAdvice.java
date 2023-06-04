@@ -1,7 +1,6 @@
 package com.bogdan.onlinelibrary.controller;
 
 import com.bogdan.onlinelibrary.entity.UserEntity;
-import com.bogdan.onlinelibrary.service.MemberService;
 import com.bogdan.onlinelibrary.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 @RequiredArgsConstructor
 public class GlobalControllerAdvice {
     private final UserService userService;
-    private final MemberService memberService;
 
     // ATTRIBUTES
     @ModelAttribute("isAdmin")
