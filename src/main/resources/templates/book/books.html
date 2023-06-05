@@ -55,7 +55,7 @@
             <p class="card-text">Author: <span th:text="${book.author.firstName + ' ' + book.author.lastName}"></span></p>
             <p class="card-text">Price: <span th:text="${book.price}"></span></p>
             <p class="card-text">Genre: <span th:text="${book.genre.getValue()}"></span></p>
-            <p class="card-text">Amount: <span th:text="${book.amount > 0 ? 'Available' : 'Not available'}"></span></p>
+            <p class="card-text">Availability: <span th:text="${book.amount > 0 ? 'Available' : 'Not available'}"></span></p>
             <p class="card-text">Description: <span th:text="${book.description}"></span></p>
             <div th:if="${isAdmin}">
                 <form th:action="@{/books/delete}" method="post" style="display: inline;">
