@@ -11,12 +11,22 @@
             background-color: #2e3440;
         }
 
+        .title-div {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .title-header {
+            color: #ffffff;
+            font-size: 4rem;
+        }
+
         .main {
             padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            min-height: 70vh;
         }
 
         .login-container {
@@ -49,6 +59,7 @@
 
 <body>
 <section>
+    <div class="title-div"><h1 class="title-header">BuyBook</h1></div>
     <div class="main">
         <div class="login-container">
             <h1 class="title">Login</h1>
@@ -65,7 +76,9 @@
                     <button type="submit" class="btn btn-primary">Login</button>
                 </div>
                 <div class="d-grid">
-                    <button onclick="redirectToRegister()" type="button" class="btn btn-outline-info">Don't have an account? Register here.</button>
+                    <button onclick="redirectToRegister()" type="button" class="btn btn-outline-info">Don't have an
+                        account? Register here.
+                    </button>
                 </div>
             </form>
         </div>
