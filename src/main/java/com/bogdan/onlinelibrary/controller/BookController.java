@@ -82,6 +82,6 @@ public class BookController {
             throw new RuntimeException("Book data are invalid!");
         }
         bookService.updateBook(book, bookId, authorId);
-        return "redirect:/books";
+        return "redirect:/books/";
     }
 }

@@ -21,7 +21,7 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/login", "/register").permitAll()
+                .antMatchers("/login", "/register", "/register/save").permitAll()
                 .antMatchers(HttpMethod.POST, "/credit-cards/", "/purchases/save/", "/members/").hasAuthority("USER")
                 .antMatchers(HttpMethod.GET, "/credit-cards/", "/purchases/my-purchases/", "members/").hasAuthority("USER")
                 .antMatchers(HttpMethod.POST, "/books/**").hasAuthority("ADMIN")

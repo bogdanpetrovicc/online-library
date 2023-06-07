@@ -44,12 +44,8 @@
 <br><br>
 <div class="container">
     <div class="form-container">
-        <form th:action="@{/update}" method="post" th:object="${book}">
+        <form th:action="@{/books/update}" method="post" th:object="${book}">
             <h1>Update Book</h1>
-            <div class="mb-3">
-                <label for="image" class="form-label">Image:</label>
-                <input type="text" id="image" class="form-control" th:value="${book.image}">
-            </div>
             <div class="mb-3">
                 <label for="authorId" class="form-label">Author:</label>
                 <select id="authorId" name="authorId" class="form-select">
@@ -67,6 +63,10 @@
                        id="bookId"
                        name="bookId"
                        th:value="${book.id}">
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Image:</label>
+                <input type="text" id="image" name="image" class="form-control" th:value="${book.image}">
             </div>
             <div class="mb-3">
                 <label for="name" class="form-label">Name:</label>

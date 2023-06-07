@@ -24,7 +24,7 @@ public class BookServiceImpl extends GenericServiceImpl<Book> implements BookSer
         Author author = authorService.findById(authorId);
         book.setAuthor(author);
         book.setId(bookId);
-        genericRepository.save(book);
-        return book;
+        book.setImage(book.getImage());
+        return genericRepository.save(book);
     }
 }

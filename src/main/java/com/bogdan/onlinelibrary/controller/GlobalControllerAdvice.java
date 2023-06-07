@@ -19,7 +19,7 @@ public class GlobalControllerAdvice {
         return userService.isUserAdmin();
     }
 
-    @ModelAttribute("user")
+    @ModelAttribute("loggedInUser")
     public UserEntity getLoggedInUser() {
         return userService.getLoggedInUser();
     }
